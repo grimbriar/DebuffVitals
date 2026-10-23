@@ -56,6 +56,8 @@ for k = 1, #DEFAULT_EFFECTS do
                                            DEFAULT_EFFECTS[k][4], DEFAULT_EFFECTS[k][5]}
 end
 
+LoadSettings()
+
 -- The options panel in plugins manager
 OP = OptionsPanel()
 
@@ -65,7 +67,5 @@ AddCallback(LocalUser, "TargetChanged", TargetChangeHandler);
 -- The subset of effects that are 'interesting' (enabled in options panel and
 --      considered in a target frame)
 EffectsSet = {}
-
-LoadSettings()
 
 CreateFrames()
