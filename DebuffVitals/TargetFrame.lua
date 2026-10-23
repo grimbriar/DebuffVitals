@@ -60,9 +60,10 @@ function TargetFrame:Constructor(FrameID, LoadedFrame)
     self.Lock = Turbine.UI.Control()
     self.Lock:SetParent (self)
     self.Lock:SetBackground (0x410001D3)
+    self.lock_edge_length = 20
 
-    self.Lock:SetSize (ControlHeight, ControlHeight)
-    self.Lock:SetPosition (FrameWidth - ControlHeight,0)
+    self.Lock:SetSize(self.lock_edge_length, self.lock_edge_length)
+    self.Lock:SetPosition (FrameWidth - self.lock_edge_length, 0)
     self.Lock:SetBlendMode (Turbine.UI.BlendMode.Overlay)
 
     self.Lock.MouseClick = function ()
@@ -555,8 +556,8 @@ function TargetFrame:Resize()
     self.LockBackground:SetSize(ControlHeight, ControlHeight)
     self.LockBackground:SetPosition (FrameWidth - ControlHeight,0)
 
-    self.Lock:SetSize(ControlHeight, ControlHeight)
-    self.Lock:SetPosition (FrameWidth - ControlHeight,0)
+    self.Lock:SetSize(self.lock_edge_length, self.lock_edge_length)
+    self.Lock:SetPosition (FrameWidth - self.lock_edge_length, 0)
 
     -- morale/power
     local MoralePowerHeight = 0
