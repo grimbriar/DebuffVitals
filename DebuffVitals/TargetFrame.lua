@@ -568,6 +568,8 @@ function TargetFrame:Resize()
     local MoralePowerHeight = 0
     if self.ShowMorale then
         local moralePosition = self.TitleBar:GetHeight()
+        self.Morale.BarMissing:SetSize (FrameWidth, ControlHeight)
+        self.Morale.BarMissing:SetPosition (0, moralePosition)
         self.Morale.Bar:SetSize (FrameWidth, ControlHeight)
         self.Morale.Bar:SetPosition (0, moralePosition)
         self.Morale.Percent:SetSize(45, ControlHeight)
@@ -583,6 +585,8 @@ function TargetFrame:Resize()
 
     if self.ShowPower then
         local powerPosition = self.TitleBar:GetHeight() + MoralePowerHeight
+        self.Power.BarMissing:SetSize (FrameWidth, ControlHeight)
+        self.Power.BarMissing:SetPosition (0, powerPosition)
         self.Power.Bar:SetSize(FrameWidth, ControlHeight)
         self.Power.Bar:SetPosition (0, powerPosition)
         self.Power.Percent:SetSize(45, ControlHeight)    
