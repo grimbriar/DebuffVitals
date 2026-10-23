@@ -37,6 +37,7 @@ function EffectFrame:Constructor (CurrentFrame, EffectDefinition)
     self.name:SetPosition(ControlHeight, 0) 
     self.name:SetTextAlignment(Turbine.UI.ContentAlignment.MiddleLeft);
     self.name:SetFont( Turbine.UI.Lotro.Font.Verdana12 )
+    self.name:SetFontStyle(Turbine.UI.FontStyle.Outline)
     self.name:SetText(tostring(EffectDefinition[2]))
     self.name:SetForeColor (Turbine.UI.Color.Gray)
     self.name:SetMultiline(false)
@@ -51,6 +52,7 @@ function EffectFrame:Constructor (CurrentFrame, EffectDefinition)
     self.timer:SetPosition(FrameWidth - 30, 0)
     self.timer:SetTextAlignment(Turbine.UI.ContentAlignment.MiddleRight);
     self.timer:SetFont( Turbine.UI.Lotro.Font.Verdana12 )
+    self.timer:SetFontStyle(Turbine.UI.FontStyle.Outline)
     self.timer:SetForeColor (Turbine.UI.Color.Gray)
     self.timer:SetText("-")
 end

@@ -35,6 +35,7 @@ function TargetFrame:Constructor(FrameID, LoadedFrame)
     self.TitleBar:SetPosition (0,0)
     self.TitleBar:SetTextAlignment (Turbine.UI.ContentAlignment.MiddleLeft)
     self.TitleBar:SetFont (Turbine.UI.Lotro.Font.Verdana12)
+    self.TitleBar:SetFontStyle(Turbine.UI.FontStyle.Outline)
     self.TitleBar:SetBackColor (Turbine.UI.Color.Black)
     self.TitleBar:SetMultiline (false)  
   
@@ -107,6 +108,7 @@ function TargetFrame:Constructor(FrameID, LoadedFrame)
     self.Morale.Percent:SetMouseVisible (false)
     self.Morale.Percent:SetTextAlignment (Turbine.UI.ContentAlignment.MiddleLeft)
     self.Morale.Percent:SetFont (Turbine.UI.Lotro.Font.Verdana12 )
+    self.Morale.Percent:SetFontStyle(Turbine.UI.FontStyle.Outline)
     self.Morale.Percent:SetVisible (self.ShowMorale)    
 
     self.Morale.Title = Turbine.UI.Label()
@@ -117,6 +119,7 @@ function TargetFrame:Constructor(FrameID, LoadedFrame)
     self.Morale.Title:SetText ("")
     self.Morale.Title:SetTextAlignment (Turbine.UI.ContentAlignment.MiddleRight)
     self.Morale.Title:SetFont (Turbine.UI.Lotro.Font.Verdana12)
+    self.Morale.Title:SetFontStyle(Turbine.UI.FontStyle.Outline)
     self.Morale.Title:SetVisible (self.ShowMorale)
 
     -- ------------------------------------------------------------------------
@@ -150,6 +153,7 @@ function TargetFrame:Constructor(FrameID, LoadedFrame)
     self.Power.Percent:SetMouseVisible (false)
     self.Power.Percent:SetTextAlignment (Turbine.UI.ContentAlignment.MiddleLeft)
     self.Power.Percent:SetFont (Turbine.UI.Lotro.Font.Verdana12)
+    self.Power.Percent:SetFontStyle(Turbine.UI.FontStyle.Outline)
     self.Power.Percent:SetVisible (self.ShowPower)
 
     self.Power.Title = Turbine.UI.Label()
@@ -160,6 +164,7 @@ function TargetFrame:Constructor(FrameID, LoadedFrame)
     self.Power.Title:SetText ("")
     self.Power.Title:SetTextAlignment (Turbine.UI.ContentAlignment.MiddleRight)
     self.Power.Title:SetFont (Turbine.UI.Lotro.Font.Verdana12)
+    self.Power.Title:SetFontStyle(Turbine.UI.FontStyle.Outline)
     self.Power.Title:SetVisible (self.ShowPower)
 
     -- ------------------------------------------------------------------------
@@ -569,7 +574,7 @@ function TargetFrame:Resize()
         self.Morale.Percent:SetPosition (0, moralePosition)
         self.Morale.Title:SetSize(FrameWidth - 45, ControlHeight)
         self.Morale.Title:SetPosition (45, moralePosition)
-
+        
         MoralePowerHeight = MoralePowerHeight + ControlHeight
     end
     self.Morale.Bar:SetVisible(self.ShowMorale)
@@ -584,7 +589,7 @@ function TargetFrame:Resize()
         self.Power.Percent:SetPosition (0, powerPosition)
         self.Power.Title:SetPosition (45, powerPosition)
         self.Power.Title:SetSize(FrameWidth - 45, ControlHeight)
-        
+              
         MoralePowerHeight = MoralePowerHeight + ControlHeight
     end
     self.Power.Bar:SetVisible(self.ShowPower)
