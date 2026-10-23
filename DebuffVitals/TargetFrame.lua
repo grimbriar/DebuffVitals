@@ -82,6 +82,14 @@ function TargetFrame:Constructor(FrameID, LoadedFrame)
 
     self.ShowMorale = DEFAULT_SHOW_MORALE
     if LoadedFrame ~= nil and LoadedFrame.ShowMorale ~= nil then self.ShowMorale = LoadedFrame.ShowMorale end
+
+    self.Morale.BarMissing = Turbine.UI.Control()
+    self.Morale.BarMissing:SetParent (self)
+    self.Morale.BarMissing:SetBackColor (Turbine.UI.Color( 1.0, 0.0, 0.0, 0.0 ))
+    self.Morale.BarMissing:SetSize (FrameWidth, ControlHeight)
+    self.Morale.BarMissing:SetPosition (0, moralePosition)
+    self.Morale.BarMissing:SetMouseVisible (false)
+    self.Morale.BarMissing:SetVisible (self.ShowMorale)
     
     self.Morale.Bar = Turbine.UI.Control()
     self.Morale.Bar:SetParent (self)
@@ -116,7 +124,15 @@ function TargetFrame:Constructor(FrameID, LoadedFrame)
     local powerPosition = self.TitleBar:GetHeight() + self.Morale.Bar:GetHeight()
 
     self.ShowPower = DEFAULT_SHOW_POWER
-    if LoadedFrame ~= nil and LoadedFrame.ShowPower ~= nil then self.ShowPower = LoadedFrame.ShowPower end 
+    if LoadedFrame ~= nil and LoadedFrame.ShowPower ~= nil then self.ShowPower = LoadedFrame.ShowPower end
+
+    self.Power.BarMissing = Turbine.UI.Control()
+    self.Power.BarMissing:SetParent (self)
+    self.Power.BarMissing:SetBackColor (Turbine.UI.Color( 1.0, 0.0, 0.0, 0.0 ))
+    self.Power.BarMissing:SetSize (FrameWidth, ControlHeight)
+    self.Power.BarMissing:SetPosition (0, powerPosition)
+    self.Power.BarMissing:SetMouseVisible (false)
+    self.Power.BarMissing:SetVisible (self.ShowMorale)
 
     self.Power.Bar = Turbine.UI.Control()
     self.Power.Bar:SetParent (self)
