@@ -136,7 +136,7 @@ function TargetFrame:Constructor(FrameID, LoadedFrame)
     self.Power.BarMissing:SetSize (FrameWidth, ControlHeight)
     self.Power.BarMissing:SetPosition (0, powerPosition)
     self.Power.BarMissing:SetMouseVisible (false)
-    self.Power.BarMissing:SetVisible (self.ShowMorale)
+    self.Power.BarMissing:SetVisible (self.ShowPower)
 
     self.Power.Bar = Turbine.UI.Control()
     self.Power.Bar:SetParent (self)
@@ -579,6 +579,7 @@ function TargetFrame:Resize()
         
         MoralePowerHeight = MoralePowerHeight + ControlHeight
     end
+    self.Morale.BarMissing:SetVisible(self.ShowMorale)
     self.Morale.Bar:SetVisible(self.ShowMorale)
     self.Morale.Percent:SetVisible(self.ShowMorale)
     self.Morale.Title:SetVisible(self.ShowMorale)
@@ -596,6 +597,7 @@ function TargetFrame:Resize()
               
         MoralePowerHeight = MoralePowerHeight + ControlHeight
     end
+    self.Power.BarMissing:SetVisible(self.ShowPower)
     self.Power.Bar:SetVisible(self.ShowPower)
     self.Power.Percent:SetVisible(self.ShowPower)
     self.Power.Title:SetVisible(self.ShowPower)
