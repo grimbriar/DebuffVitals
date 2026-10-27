@@ -45,6 +45,12 @@ function ActivateSettings(settings)
     if settings.Frames ~= nil then
         loadedFrames = settings.Frames
     end
+
+    if #settings.savedTargetFrameDisplayOptions ~= #DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS then
+        settings.savedTargetFrameDisplayOptions = DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS
+    elseif settings.savedTargetFrameDisplayOptions ~= nil then
+        TargetFrameDisplayOptions = settings.savedTargetFrameDisplayOptions
+    end
 end
 
 -- ------------------------------------------------------------------------
@@ -71,6 +77,7 @@ function CaptureSettings()
     currentsettings.LockedPosition = LockedPosition
     currentsettings.EffectsModulus = EffectsModulus
     currentsettings.SaveFramePositions = SaveFramePositions
+    currentsettings.savedTargetFrameDisplayOptions = TargetFrameDisplayOptions
     currentsettings.Frames = {}
     for k = 1, #TargetFrames do
         local frame = {}

@@ -172,6 +172,10 @@ DEFAULT_CREEP_EFFECTS = {
 DEFAULT_CREEP_PLAYER_EFFECTS = {
 } 
 
+--    name,              description,                      state (true false)
+DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS = {
+}
+
 DEFAULT_EFFECTS = DEFAULT_FREEP_EFFECTS
 
 -- ------------------------------------------------------------------------

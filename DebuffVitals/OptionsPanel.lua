@@ -1,5 +1,6 @@
 local DEBUG_ENABLED = DEBUG_ENABLED
 local DEFAULT_EFFECTS = DEFAULT_EFFECTS
+local DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS = DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS
 -- ------------------------------------------------------------------------
 -- Plugin Manager Options Panel
 -- ------------------------------------------------------------------------
@@ -100,12 +101,26 @@ function OptionsPanel:Constructor ()
     self.ModulusTitle:SetFont( Turbine.UI.Lotro.Font.Verdana16 )
     self.ModulusScrollBar.ValueChanged()    
 
+    self.TargetFrameDisplayOptions_checkboxes = {}
+    local OPTIONS = TargetFrameDisplayOptions
+    for k = 1, #OPTIONS do
+        local TFDO_checkbox = Turbine.UI.Lotro.CheckBox()
+        TFDO_checkbox:SetParent(self)
+        TFDO_checkbox:SetPosition(140, 120 + k * 20)
+        TFDO_checkbox:SetSize(400, 20)
+        TFDO_checkbox:SetTextAlignment(Turbine.UI.ContentAlignment.MiddleLeft);
+        TFDO_checkbox:SetFont( Turbine.UI.Lotro.Font.Verdana16 )
+        TFDO_checkbox:SetText(" "..tostring(OPTIONS[k][2]))
+        self.TargetFrameDisplayOptions_checkboxes[k] = TFDO_checkbox
+        TargetFrameDisplayOptions_Offset = 60 + k * 20
+    end
+
     -- DEBUFFS AND EFFECTS
     self.DebuffsTitle = Turbine.UI.Label()
     self.DebuffsTitle:SetVisible(true)
     self.DebuffsTitle:SetParent(self)
     self.DebuffsTitle:SetSize(200, 40)
-    self.DebuffsTitle:SetPosition(20, DEBUFF_AND_EFFECTS_OFFSET + 0) 
+    self.DebuffsTitle:SetPosition(20, DEBUFF_AND_EFFECTS_OFFSET + TargetFrameDisplayOptions_Offset + 0) 
     self.DebuffsTitle:SetTextAlignment(Turbine.UI.ContentAlignment.MiddleLeft);
     self.DebuffsTitle:SetFont( Turbine.UI.Lotro.Font.Verdana20 )
     self.DebuffsTitle:SetText("Debuffs and Effects")
@@ -121,13 +136,13 @@ function OptionsPanel:Constructor ()
             groupName:SetVisible(true)
             groupName:SetParent(self)
             groupName:SetSize(140, 20)
-            groupName:SetPosition(40, DEBUFF_AND_EFFECTS_OFFSET + 20 + k * 20) 
+            groupName:SetPosition(40, DEBUFF_AND_EFFECTS_OFFSET + TargetFrameDisplayOptions_Offset + 20 + k * 20) 
             groupName:SetTextAlignment(Turbine.UI.ContentAlignment.MiddleLeft);
             groupName:SetFont( Turbine.UI.Lotro.Font.Verdana18 )
             groupName:SetText(currentGroup)         
         end
         checkbox:SetParent(self)
-        checkbox:SetPosition(140, DEBUFF_AND_EFFECTS_OFFSET + 20 + k * 20)
+        checkbox:SetPosition(140, DEBUFF_AND_EFFECTS_OFFSET + TargetFrameDisplayOptions_Offset + 20 + k * 20)
         checkbox:SetSize(400, 20)
         checkbox:SetTextAlignment(Turbine.UI.ContentAlignment.MiddleLeft);
         checkbox:SetFont( Turbine.UI.Lotro.Font.Verdana16 )
@@ -137,7 +152,7 @@ function OptionsPanel:Constructor ()
     
     self:SetCheckboxes()
 
-    self:SetSize(0, DEBUFF_AND_EFFECTS_OFFSET + 100 + #self.checkboxes * 20)
+    self:SetSize(0, DEBUFF_AND_EFFECTS_OFFSET + TargetFrameDisplayOptions_Offset + 100 + #self.checkboxes * 20)
     
     -- buttons
     self.RevertButton = Turbine.UI.Lotro.Button();
@@ -185,6 +200,14 @@ function OptionsPanel:Defaults()
         end                       
     end
     
+    for k = 1, #DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS do
+        if DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS[k][3] == 1 then
+            self.TargetFrameDisplayOptions_checkboxes[k]:SetChecked(true)
+        else
+            self.TargetFrameDisplayOptions_checkboxes[k]:SetChecked(false)
+        end
+    end
+
     collectgarbage()
 end
 
@@ -199,8 +222,15 @@ function OptionsPanel:Accept()
             TrackedEffects[k][3] = 0
         end
     end
-
     GenerateEffectsSetFromTrackedEffects()
+
+    for k = 1, #self.TargetFrameDisplayOptions_checkboxes do
+        if self.TargetFrameDisplayOptions_checkboxes[k]:IsChecked() then
+            TargetFrameDisplayOptions[k][3] = 1
+        else
+            TargetFrameDisplayOptions[k][3] = 0
+        end
+    end
 
     FrameWidth = self.WidthScrollBar:GetValue()
     ControlHeight = self.HeightScrollBar:GetValue()
@@ -234,6 +264,15 @@ function OptionsPanel:Revert()
             self.checkboxes[k]:SetChecked(false)
         end                       
     end
+
+    local OPTIONS = TargetFrameDisplayOptions
+    for k = 1, #OPTIONS do
+        if OPTIONS[k][3] == 1 then
+            self.TargetFrameDisplayOptions_checkboxes[k]:SetChecked(true)
+        else
+            self.TargetFrameDisplayOptions_checkboxes[k]:SetChecked(false)
+        end
+    end
 end
 
 -- ------------------------------------------------------------------------
@@ -248,5 +287,14 @@ function OptionsPanel:SetCheckboxes()
         else
             self.checkboxes[k]:SetChecked(false)
         end                       
+    end
+
+    local OPTIONS = TargetFrameDisplayOptions
+    for k = 1, #OPTIONS do
+        if OPTIONS[k][3] == 1 then
+            self.TargetFrameDisplayOptions_checkboxes[k]:SetChecked(true)
+        else
+            self.TargetFrameDisplayOptions_checkboxes[k]:SetChecked(false)
+        end
     end
 end

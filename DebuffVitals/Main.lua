@@ -56,6 +56,15 @@ for k = 1, #DEFAULT_EFFECTS do
                                            DEFAULT_EFFECTS[k][4], DEFAULT_EFFECTS[k][5]}
 end
 
+-- The complete list of options to toggle
+TargetFrameDisplayOptions = {}
+-- Create a list of the options available
+for k = 1, #DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS do
+    TargetFrameDisplayOptions[#TargetFrameDisplayOptions + 1] = {DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS[k][1],
+                                                                 DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS[k][2], 
+                                                                 DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS[k][3]}
+end
+
 LoadSettings()
 
 -- The options panel in plugins manager
