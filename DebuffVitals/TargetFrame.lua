@@ -554,64 +554,122 @@ end
 --  Set size/visibility of all controls
 -- ------------------------------------------------------------------------
 function TargetFrame:Resize()
-
-    -- namebar
+    -- namebar sizes
     self.TitleBar:SetSize(FrameWidth - ControlHeight, ControlHeight)
-
     self.LockBackground:SetSize(ControlHeight, ControlHeight)
-    self.LockBackground:SetPosition (FrameWidth - ControlHeight,0)
-
     self.Lock:SetSize(self.lock_edge_length, self.lock_edge_length)
-    self.Lock:SetPosition (FrameWidth - self.lock_edge_length, 0)
+
+    -- morale/power sizes
+    if self.ShowMorale then
+        self.Morale.BarMissing:SetSize (FrameWidth, ControlHeight)
+        self.Morale.Bar:SetSize (FrameWidth, ControlHeight)
+        self.Morale.Percent:SetSize(45, ControlHeight)
+        self.Morale.Title:SetSize(FrameWidth - 45, ControlHeight)
+    end
+    if self.ShowPower then
+        self.Power.BarMissing:SetSize (FrameWidth, ControlHeight)
+        self.Power.Bar:SetSize(FrameWidth, ControlHeight)
+        self.Power.Percent:SetSize(45, ControlHeight)
+        self.Power.Title:SetSize(FrameWidth - 45, ControlHeight)
+    end
+
+    local FLIP_EFFECTS_STATE = 0
+    local MoralePowerHeight = 0
+    local OPTIONS = TargetFrameDisplayOptions
+    for k = 1, #OPTIONS do
+        if OPTIONS[k][1] == "FLIP_EFFECTS" then
+            if OPTIONS[k][3] == 1 then
+                FLIP_EFFECTS_STATE = 1
+                local MoralePowerEnabled = 0
+                -- namebar positions
+                self.TitleBar:SetPosition(0, #self.EnabledEffects*ControlHeight)
+                self.LockBackground:SetPosition (FrameWidth - ControlHeight, #self.EnabledEffects*ControlHeight)
+                self.Lock:SetPosition (FrameWidth - ControlHeight, #self.EnabledEffects*ControlHeight)
+
+                -- morale/power positions
+                if self.ShowMorale then
+                    local moralePosition = self.TitleBar:GetHeight()
+                    self.Morale.BarMissing:SetPosition (0, moralePosition + #self.EnabledEffects*ControlHeight)
+                    self.Morale.Bar:SetPosition (0, moralePosition + #self.EnabledEffects*ControlHeight)
+                    self.Morale.Percent:SetPosition (0, moralePosition + #self.EnabledEffects*ControlHeight)
+                    self.Morale.Title:SetPosition (45, moralePosition + #self.EnabledEffects*ControlHeight)
+                    MoralePowerHeight = MoralePowerHeight + ControlHeight
+                    MoralePowerEnabled = MoralePowerEnabled + 1
+                end
+                if self.ShowPower then
+                    local powerPosition = self.TitleBar:GetHeight() + MoralePowerHeight
+                    self.Power.BarMissing:SetPosition (0, powerPosition + #self.EnabledEffects*ControlHeight)
+                    self.Power.Bar:SetPosition (0, powerPosition + #self.EnabledEffects*ControlHeight)
+                    self.Power.Percent:SetPosition (0, powerPosition + #self.EnabledEffects*ControlHeight)
+                    self.Power.Title:SetPosition (45, powerPosition + #self.EnabledEffects*ControlHeight)
+                    MoralePowerHeight = MoralePowerHeight + ControlHeight
+                    MoralePowerEnabled = MoralePowerEnabled + 1
+                end
+
+                for k = 1, #self.EnabledEffects do    
+                    self.EnabledEffects[k]:SetPosition (0, MoralePowerHeight + (k - 1 - MoralePowerEnabled) * ControlHeight)
+                end
+                
+                -- interactable zone
+                self.TargetSelection:SetPosition(0, ControlHeight + #self.EnabledEffects*ControlHeight)
+
+            end
+            break -- found the option that was being looked for
+        end
+    end
+    if FLIP_EFFECTS_STATE == 0 then
+        -- namebar positions
+        self.TitleBar:SetPosition (0, 0)
+        self.LockBackground:SetPosition (FrameWidth - ControlHeight,0)
+        self.Lock:SetPosition (FrameWidth - self.lock_edge_length, 0)
+
+        -- morale/power positions
+        if self.ShowMorale then
+            local moralePosition = self.TitleBar:GetHeight()
+            self.Morale.BarMissing:SetPosition (0, moralePosition)
+            self.Morale.Bar:SetPosition (0, moralePosition)
+            self.Morale.Percent:SetPosition (0, moralePosition)
+            self.Morale.Title:SetPosition (45, moralePosition)
+            MoralePowerHeight = MoralePowerHeight + ControlHeight
+        end
+        if self.ShowPower then
+            local powerPosition = self.TitleBar:GetHeight() + MoralePowerHeight
+            self.Power.BarMissing:SetPosition (0, powerPosition)
+            self.Power.Bar:SetPosition (0, powerPosition)
+            self.Power.Percent:SetPosition (0, powerPosition)
+            self.Power.Title:SetPosition (45, powerPosition)
+            MoralePowerHeight = MoralePowerHeight + ControlHeight
+        end
+
+        for k = 1, #self.EnabledEffects do
+            self.EnabledEffects[k]:SetPosition (0, self.TitleBar:GetHeight() + (MoralePowerHeight + (k - 1) * ControlHeight))
+        end
+
+        -- interactable zone
+        self.TargetSelection:SetPosition(0, ControlHeight)
+    end
 
     -- morale/power
-    local MoralePowerHeight = 0
-    if self.ShowMorale then
-        local moralePosition = self.TitleBar:GetHeight()
-        self.Morale.BarMissing:SetSize (FrameWidth, ControlHeight)
-        self.Morale.BarMissing:SetPosition (0, moralePosition)
-        self.Morale.Bar:SetSize (FrameWidth, ControlHeight)
-        self.Morale.Bar:SetPosition (0, moralePosition)
-        self.Morale.Percent:SetSize(45, ControlHeight)
-        self.Morale.Percent:SetPosition (0, moralePosition)
-        self.Morale.Title:SetSize(FrameWidth - 45, ControlHeight)
-        self.Morale.Title:SetPosition (45, moralePosition)
-        
-        MoralePowerHeight = MoralePowerHeight + ControlHeight
-    end
-    self.Morale.BarMissing:SetVisible(self.ShowMorale)
     self.Morale.Bar:SetVisible(self.ShowMorale)
     self.Morale.Percent:SetVisible(self.ShowMorale)
     self.Morale.Title:SetVisible(self.ShowMorale)
 
-    if self.ShowPower then
-        local powerPosition = self.TitleBar:GetHeight() + MoralePowerHeight
-        self.Power.BarMissing:SetSize (FrameWidth, ControlHeight)
-        self.Power.BarMissing:SetPosition (0, powerPosition)
-        self.Power.Bar:SetSize(FrameWidth, ControlHeight)
-        self.Power.Bar:SetPosition (0, powerPosition)
-        self.Power.Percent:SetSize(45, ControlHeight)    
-        self.Power.Percent:SetPosition (0, powerPosition)
-        self.Power.Title:SetPosition (45, powerPosition)
-        self.Power.Title:SetSize(FrameWidth - 45, ControlHeight)
-              
-        MoralePowerHeight = MoralePowerHeight + ControlHeight
-    end
-    self.Power.BarMissing:SetVisible(self.ShowPower)
     self.Power.Bar:SetVisible(self.ShowPower)
     self.Power.Percent:SetVisible(self.ShowPower)
     self.Power.Title:SetVisible(self.ShowPower)
 
+    local transparent = Turbine.UI.Color(0.0, 0.0, 0.0, 0.0)    -- effects background color
     for k = 1, #self.EnabledEffects do
-        self.EnabledEffects[k]:SetPosition (0, self.TitleBar:GetHeight() + MoralePowerHeight + (k - 1) * ControlHeight)
+        self.EnabledEffects[k]:SetBackColor (transparent)
+        self.EnabledEffects[k]:SetMouseVisible (false)
     end
 
     -- title bar, morale bar, power bar + all effects
     local frameSize = self.TitleBar:GetHeight() + MoralePowerHeight + #self.EnabledEffects * ControlHeight
-    
+
+    -- interactable zone
     self:SetSize(FrameWidth, frameSize)
-    self.TargetSelection:SetPosition(0,ControlHeight)
     self.TargetSelection:SetSize(FrameWidth, frameSize)
-    
+
     self:UpdateTarget()
 end

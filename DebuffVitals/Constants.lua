@@ -174,6 +174,7 @@ DEFAULT_CREEP_PLAYER_EFFECTS = {
 
 --    name,              description,                      state (true false)
 DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS = {
+    {"FLIP_EFFECTS",    "Flip effects over titlebar",      0},
 }
 
 DEFAULT_EFFECTS = DEFAULT_FREEP_EFFECTS
