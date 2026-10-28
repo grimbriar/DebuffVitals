@@ -46,7 +46,7 @@ function ActivateSettings(settings)
         loadedFrames = settings.Frames
     end
 
-    if #settings.savedTargetFrameDisplayOptions ~= #DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS then
+    if (settings.savedTargetFrameDisplayOptions == nil) or (#settings.savedTargetFrameDisplayOptions ~= #DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS) then
         settings.savedTargetFrameDisplayOptions = DEFAULT_TARGET_FRAME_DISPLAY_OPTIONS
     elseif settings.savedTargetFrameDisplayOptions ~= nil then
         TargetFrameDisplayOptions = settings.savedTargetFrameDisplayOptions
